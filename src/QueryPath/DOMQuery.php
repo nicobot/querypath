@@ -96,8 +96,8 @@ class DOMQuery implements \QueryPath\Query, \IteratorAggregate, \Countable {
    *   An associative array of options.
    * @see qp()
    */
-  public function __construct($document = NULL, $string = NULL, $options = array()) {
-    $string = trim($string);
+  public function __construct($document = NULL, $string = '', $options = array()) {
+    $string = trim((string) $string);
     $this->options = $options + Options::get() + $this->options;
 
     $parser_flags = isset($options['parser_flags']) ? $options['parser_flags'] : self::DEFAULT_PARSER_FLAGS;
@@ -364,6 +364,7 @@ class DOMQuery implements \QueryPath\Query, \IteratorAggregate, \Countable {
    * @return int
    *  The number of matches in the DOMQuery.
    */
+  #[\ReturnTypeWillChange]	  
   public function count() {
     return $this->matches->count();
   }
@@ -3985,6 +3986,7 @@ class DOMQuery implements \QueryPath\Query, \IteratorAggregate, \Countable {
    * @return Iterable
    *  Returns an iterator.
    */
+  #[\ReturnTypeWillChange]	  
   public function getIterator() {
     $i = new QueryPathIterator($this->matches);
     $i->options = $this->options;
